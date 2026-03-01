@@ -19,7 +19,9 @@ export type Database = {
           created_at: string
           date: string
           debt: number
+          electricity_cost: number
           electricity_remaining: number
+          electricity_units_bought: number
           electricity_used: number
           food_expense: number
           id: string
@@ -33,7 +35,9 @@ export type Database = {
           created_at?: string
           date: string
           debt?: number
+          electricity_cost?: number
           electricity_remaining?: number
+          electricity_units_bought?: number
           electricity_used?: number
           food_expense?: number
           id?: string
@@ -47,7 +51,9 @@ export type Database = {
           created_at?: string
           date?: string
           debt?: number
+          electricity_cost?: number
           electricity_remaining?: number
+          electricity_units_bought?: number
           electricity_used?: number
           food_expense?: number
           id?: string

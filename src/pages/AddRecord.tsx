@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Info } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -18,7 +18,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { cn } from "@/lib/utils";
 import { upsertRecord, fetchRecordByDate, fetchLatestRecord } from "@/lib/queries";
 import { useToast } from "@/hooks/use-toast";
-import { Info } from "lucide-react";
 
 const schema = z.object({
   date: z.date({ required_error: "Date is required" }),
@@ -29,9 +28,23 @@ const schema = z.object({
   debt: z.coerce.number().min(0, "Must be 0 or more"),
   electricity_used: z.coerce.number().min(0, "Must be 0 or more"),
   electricity_remaining: z.coerce.number().min(0, "Must be 0 or more"),
+  electricity_units_bought: z.coerce.number().min(0, "Must be 0 or more"),
+  electricity_cost: z.coerce.number().min(0, "Must be 0 or more"),
 });
 
 type FormValues = z.infer<typeof schema>;
+
+const FieldWithTooltip = ({ label, tooltip }: { label: string; tooltip: string }) => (
+  <div className="flex items-center gap-1.5">
+    <span>{label}</span>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+      </TooltipTrigger>
+      <TooltipContent><p className="max-w-[200px] text-xs">{tooltip}</p></TooltipContent>
+    </Tooltip>
+  </div>
+);
 
 const AddRecord = () => {
   const [searchParams] = useSearchParams();
@@ -51,20 +64,20 @@ const AddRecord = () => {
       debt: 0,
       electricity_used: 0,
       electricity_remaining: 0,
+      electricity_units_bought: 0,
+      electricity_cost: 0,
     },
   });
 
   const selectedDate = form.watch("date");
   const dateStr = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
 
-  // Load existing record for selected date
   const { data: existingRecord } = useQuery({
     queryKey: ["record", dateStr],
     queryFn: () => fetchRecordByDate(dateStr),
     enabled: !!dateStr,
   });
 
-  // Load latest record for pre-filling electricity
   const { data: latestRecord } = useQuery({
     queryKey: ["latestRecord"],
     queryFn: fetchLatestRecord,
@@ -81,6 +94,8 @@ const AddRecord = () => {
         debt: existingRecord.debt,
         electricity_used: existingRecord.electricity_used,
         electricity_remaining: existingRecord.electricity_remaining,
+        electricity_units_bought: existingRecord.electricity_units_bought,
+        electricity_cost: existingRecord.electricity_cost,
       });
     } else if (latestRecord && !existingRecord) {
       form.setValue("electricity_remaining", latestRecord.electricity_remaining);
@@ -98,6 +113,8 @@ const AddRecord = () => {
         debt: values.debt,
         electricity_used: values.electricity_used,
         electricity_remaining: values.electricity_remaining,
+        electricity_units_bought: values.electricity_units_bought,
+        electricity_cost: values.electricity_cost,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todayRecord"] });
@@ -112,19 +129,7 @@ const AddRecord = () => {
   });
 
   const watched = form.watch();
-  const calcProfit = (watched.money_earned || 0) - (watched.food_expense || 0) - (watched.repair_expense || 0) - (watched.other_expense || 0) - (watched.debt || 0);
-
-  const FieldWithTooltip = ({ label, tooltip }: { label: string; tooltip: string }) => (
-    <div className="flex items-center gap-1.5">
-      <span>{label}</span>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
-        </TooltipTrigger>
-        <TooltipContent><p className="max-w-[200px] text-xs">{tooltip}</p></TooltipContent>
-      </Tooltip>
-    </div>
-  );
+  const calcProfit = (watched.money_earned || 0) - (watched.food_expense || 0) - (watched.repair_expense || 0) - (watched.other_expense || 0) - (watched.debt || 0) - (watched.electricity_cost || 0);
 
   return (
     <AppLayout>
@@ -209,6 +214,22 @@ const AddRecord = () => {
 
                 {/* Electricity */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField control={form.control} name="electricity_units_bought" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel><FieldWithTooltip label="Units Bought" tooltip="Number of electricity units purchased" /></FormLabel>
+                      <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="electricity_cost" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel><FieldWithTooltip label="Electricity Cost (Tsh)" tooltip="Total price paid for electricity units" /></FormLabel>
+                      <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
                   <FormField control={form.control} name="electricity_used" render={({ field }) => (
                     <FormItem>
                       <FormLabel><FieldWithTooltip label="Electricity Used" tooltip="Units of electricity consumed today" /></FormLabel>
@@ -234,7 +255,7 @@ const AddRecord = () => {
                 )}>
                   <p className="text-sm text-muted-foreground">Calculated Profit</p>
                   <p className={cn("text-3xl font-bold font-mono", calcProfit >= 0 ? "text-success" : "text-destructive")}>
-                    ${calcProfit.toLocaleString()}
+                    Tsh {calcProfit.toLocaleString()}
                   </p>
                 </div>
 

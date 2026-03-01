@@ -73,22 +73,24 @@ const Reports = () => {
             <TableHead className="text-right">Expenses</TableHead>
             <TableHead className="text-right">Debt</TableHead>
             <TableHead className="text-right">Profit</TableHead>
-            <TableHead className="text-right">Elec.</TableHead>
+            <TableHead className="text-right">Elec. Cost</TableHead>
+            <TableHead className="text-right">Elec. Rem.</TableHead>
             <TableHead className="w-[80px]"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {records.length === 0 ? (
-            <TableRow><TableCell colSpan={7} className="text-center text-muted-foreground py-8">No records found</TableCell></TableRow>
+            <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">No records found</TableCell></TableRow>
           ) : records.map((r) => (
             <TableRow key={r.id}>
               <TableCell className="font-medium">{format(new Date(r.date + "T00:00:00"), "MMM d, yyyy")}</TableCell>
-              <TableCell className="text-right font-mono">${r.money_earned}</TableCell>
-              <TableCell className="text-right font-mono">${r.food_expense + r.repair_expense + r.other_expense}</TableCell>
-              <TableCell className="text-right font-mono">${r.debt}</TableCell>
+              <TableCell className="text-right font-mono">Tsh {r.money_earned.toLocaleString()}</TableCell>
+              <TableCell className="text-right font-mono">Tsh {(r.food_expense + r.repair_expense + r.other_expense).toLocaleString()}</TableCell>
+              <TableCell className="text-right font-mono">Tsh {r.debt.toLocaleString()}</TableCell>
               <TableCell className={cn("text-right font-mono font-semibold", r.profit >= 0 ? "text-success" : "text-destructive")}>
-                ${r.profit}
+                Tsh {r.profit.toLocaleString()}
               </TableCell>
+              <TableCell className="text-right font-mono">Tsh {r.electricity_cost.toLocaleString()}</TableCell>
               <TableCell className="text-right font-mono">{r.electricity_remaining}</TableCell>
               <TableCell>
                 <div className="flex gap-1 justify-end">
