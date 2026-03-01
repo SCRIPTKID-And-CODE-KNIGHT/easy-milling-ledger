@@ -11,6 +11,8 @@ export type DailyRecord = {
   debt: number;
   electricity_used: number;
   electricity_remaining: number;
+  electricity_units_bought: number;
+  electricity_cost: number;
   profit: number;
   created_at: string;
   updated_at: string;
@@ -83,6 +85,8 @@ export type RecordInput = {
   debt: number;
   electricity_used: number;
   electricity_remaining: number;
+  electricity_units_bought: number;
+  electricity_cost: number;
 };
 
 export async function upsertRecord(input: RecordInput): Promise<DailyRecord> {

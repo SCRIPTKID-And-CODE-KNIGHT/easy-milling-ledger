@@ -43,7 +43,7 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold font-mono">
-                {loadingToday ? "..." : `$${earnings.toLocaleString()}`}
+                {loadingToday ? "..." : `Tsh ${earnings.toLocaleString()}`}
               </div>
               <p className="text-xs text-muted-foreground">Today's total income</p>
             </CardContent>
@@ -56,7 +56,7 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold font-mono text-destructive">
-                {loadingToday ? "..." : `$${totalExpenses.toLocaleString()}`}
+                {loadingToday ? "..." : `Tsh ${totalExpenses.toLocaleString()}`}
               </div>
               <p className="text-xs text-muted-foreground">Food, repairs & other</p>
             </CardContent>
@@ -69,7 +69,7 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold font-mono ${profit >= 0 ? "text-success" : "text-destructive"}`}>
-                {loadingToday ? "..." : `$${profit.toLocaleString()}`}
+                {loadingToday ? "..." : `Tsh ${profit.toLocaleString()}`}
               </div>
               <p className="text-xs text-muted-foreground">Earnings − expenses − debt</p>
             </CardContent>
