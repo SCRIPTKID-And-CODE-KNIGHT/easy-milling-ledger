@@ -28,8 +28,6 @@ const schema = z.object({
   debt: z.coerce.number().min(0, "Must be 0 or more"),
   electricity_used: z.coerce.number().min(0, "Must be 0 or more"),
   electricity_remaining: z.coerce.number().min(0, "Must be 0 or more"),
-  electricity_units_bought: z.coerce.number().min(0, "Must be 0 or more"),
-  electricity_cost: z.coerce.number().min(0, "Must be 0 or more"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -64,8 +62,6 @@ const AddRecord = () => {
       debt: 0,
       electricity_used: 0,
       electricity_remaining: 0,
-      electricity_units_bought: 0,
-      electricity_cost: 0,
     },
   });
 
@@ -94,8 +90,6 @@ const AddRecord = () => {
         debt: existingRecord.debt,
         electricity_used: existingRecord.electricity_used,
         electricity_remaining: existingRecord.electricity_remaining,
-        electricity_units_bought: existingRecord.electricity_units_bought,
-        electricity_cost: existingRecord.electricity_cost,
       });
     } else if (latestRecord && !existingRecord) {
       form.setValue("electricity_remaining", latestRecord.electricity_remaining);
@@ -113,8 +107,8 @@ const AddRecord = () => {
         debt: values.debt,
         electricity_used: values.electricity_used,
         electricity_remaining: values.electricity_remaining,
-        electricity_units_bought: values.electricity_units_bought,
-        electricity_cost: values.electricity_cost,
+        electricity_units_bought: 0,
+        electricity_cost: 0,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todayRecord"] });
@@ -129,7 +123,7 @@ const AddRecord = () => {
   });
 
   const watched = form.watch();
-  const calcProfit = (watched.money_earned || 0) - (watched.food_expense || 0) - (watched.repair_expense || 0) - (watched.other_expense || 0) - (watched.debt || 0) - (watched.electricity_cost || 0);
+  const calcProfit = (watched.money_earned || 0) - (watched.food_expense || 0) - (watched.repair_expense || 0) - (watched.other_expense || 0) - (watched.debt || 0);
 
   return (
     <AppLayout>
@@ -214,22 +208,6 @@ const AddRecord = () => {
 
                 {/* Electricity */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <FormField control={form.control} name="electricity_units_bought" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel><FieldWithTooltip label="Units Bought" tooltip="Number of electricity units purchased" /></FormLabel>
-                      <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-
-                  <FormField control={form.control} name="electricity_cost" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel><FieldWithTooltip label="Electricity Cost (Tsh)" tooltip="Total price paid for electricity units" /></FormLabel>
-                      <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )} />
-
                   <FormField control={form.control} name="electricity_used" render={({ field }) => (
                     <FormItem>
                       <FormLabel><FieldWithTooltip label="Electricity Used" tooltip="Units of electricity consumed today" /></FormLabel>
