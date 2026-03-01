@@ -9,6 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { fetchMonthRecords, fetchYearRecords, deleteRecord, type DailyRecord } from "@/lib/queries";
@@ -28,6 +30,7 @@ const Reports = () => {
   const [year, setYear] = useState(currentYear);
   const [month, setMonth] = useState(currentMonth);
   const [deleteTarget, setDeleteTarget] = useState<DailyRecord | null>(null);
+  const [elecPricePerUnit, setElecPricePerUnit] = useState("");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -136,6 +139,66 @@ const Reports = () => {
           </TabsList>
 
           <TabsContent value="monthly" className="space-y-6">
+            {/* Electricity Profit Calculator */}
+            {(() => {
+              const totalUnitsUsed = monthRecords.reduce((sum, r) => sum + r.electricity_used, 0);
+              const totalUnitsBought = monthRecords.reduce((sum, r) => sum + r.electricity_units_bought, 0);
+              const totalElecCost = monthRecords.reduce((sum, r) => sum + r.electricity_cost, 0);
+              const totalEarnings = monthRecords.reduce((sum, r) => sum + r.money_earned, 0);
+              const totalExpenses = monthRecords.reduce((sum, r) => sum + r.food_expense + r.repair_expense + r.other_expense + r.debt, 0);
+              const priceNum = parseFloat(elecPricePerUnit) || 0;
+              const elecCostCalc = priceNum > 0 ? totalUnitsUsed * priceNum : totalElecCost;
+              const finalProfit = totalEarnings - totalExpenses - elecCostCalc;
+              return (
+                <Card>
+                  <CardHeader><CardTitle className="text-base">Electricity & Profit Summary — {months[month - 1]} {year}</CardTitle></CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                      <div>
+                        <p className="text-xs text-muted-foreground">Total Units Used</p>
+                        <p className="text-lg font-bold font-mono">{totalUnitsUsed.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Total Units Bought</p>
+                        <p className="text-lg font-bold font-mono">{totalUnitsBought.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Total Earnings</p>
+                        <p className="text-lg font-bold font-mono">Tsh {totalEarnings.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Total Expenses (excl. elec.)</p>
+                        <p className="text-lg font-bold font-mono">Tsh {totalExpenses.toLocaleString()}</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 items-end border-t pt-4">
+                      <div className="space-y-1.5 w-full sm:w-auto">
+                        <Label htmlFor="elecPrice" className="text-xs">Price per Unit (Tsh)</Label>
+                        <Input
+                          id="elecPrice"
+                          type="number"
+                          placeholder="e.g. 350"
+                          value={elecPricePerUnit}
+                          onChange={(e) => setElecPricePerUnit(e.target.value)}
+                          className="w-full sm:w-[160px]"
+                        />
+                        <p className="text-[10px] text-muted-foreground">Leave empty to use recorded costs</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Electricity Cost</p>
+                        <p className="text-lg font-bold font-mono">Tsh {elecCostCalc.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Final Profit</p>
+                        <p className={cn("text-xl font-bold font-mono", finalProfit >= 0 ? "text-success" : "text-destructive")}>
+                          Tsh {finalProfit.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })()}
             <Card>
               <CardHeader><CardTitle className="text-base">Earnings vs Expenses — {months[month - 1]} {year}</CardTitle></CardHeader>
               <CardContent>
