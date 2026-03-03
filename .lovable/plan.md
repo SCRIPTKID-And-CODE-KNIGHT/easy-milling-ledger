@@ -1,39 +1,36 @@
 
 
-## Milling Machine Record System
+## Language Switcher: English ↔ Swahili
 
-### 1. Set Up Database
-- Create tables: `daily_records` (date, money_earned, food_expense, repair_expense, other_expense, debt, electricity_used, electricity_remaining, profit — auto-calculated), and optionally a `settings` table for defaults
-- Enable Row Level Security
+### Approach
+Create a simple i18n system using React Context — no heavy library needed for just 2 languages.
 
-### 2. Dashboard (Landing Page)
-- Summary cards: Today's Earnings, Expenses, Profit, Electricity Remaining
-- Quick action buttons: "Add Daily Record", "View Reports"
-- Color-coded profit (green/red)
-- Progress bar for electricity usage
+### What will be built
 
-### 3. Add/Edit Daily Record Page
-- Date picker to select the record date
-- Form fields: Money Earned, Food Expense, Repair Expense, Other Expense, Debt, Electricity Used, Electricity Remaining
-- Auto-calculate profit (earnings − total expenses)
-- Pre-fill electricity remaining from previous day's record
-- Form validation (no negatives, required fields)
-- Confirmation toast on save
+1. **Translation file** (`src/lib/i18n.ts`) — a dictionary object mapping keys to English and Swahili strings for all UI text (dashboard labels, form fields, sidebar items, reports headings, months, etc.)
 
-### 4. Monthly & Yearly Reports Page
-- Toggle between monthly and yearly views
-- Table with all records: Date, Money Earned, Expenses, Debt, Profit, Electricity
-- Color-coded profit column (green = profit, red = loss)
-- Bar/line charts showing earnings, expenses, and profit trends using Recharts
+2. **Language Context** (`src/hooks/useLanguage.tsx`) — React context that stores the selected language (`en` | `sw`) in `localStorage` so it persists across sessions. Exposes a `t(key)` translation function and a `toggleLanguage()` method.
 
-### 5. Sidebar Navigation
-- Dashboard, Add Record, Reports links
-- Collapsible sidebar with icons
-- Active route highlighting
+3. **Language toggle button** — added to the sidebar footer (above Sign Out), showing "SW" or "EN" to switch languages.
 
-### 6. Responsive Design & Polish
-- Mobile-friendly layout with responsive tables
-- Confirmation modals for delete/edit
-- Tooltips on form fields
-- Dark/light mode support
+4. **Update all pages** — replace hardcoded English strings with `t("key")` calls:
+   - `AppLayout.tsx` — header title
+   - `AppSidebar.tsx` — menu items, sign out
+   - `Index.tsx` — dashboard cards, buttons
+   - `AddRecord.tsx` — form labels, tooltips, button text
+   - `Reports.tsx` — tab labels, table headers, chart labels, electricity summary
+   - `Auth.tsx` — login/signup text
+
+### Swahili translations (sample)
+| Key | English | Swahili |
+|-----|---------|---------|
+| dashboard | Dashboard | Dashibodi |
+| earnings | Earnings | Mapato |
+| expenses | Expenses | Matumizi |
+| profit | Profit | Faida |
+| electricity | Electricity | Umeme |
+| add_record | Add Daily Record | Ongeza Rekodi |
+| reports | Reports | Ripoti |
+| sign_out | Sign Out | Ondoka |
+| sign_in | Sign In | Ingia |
 
