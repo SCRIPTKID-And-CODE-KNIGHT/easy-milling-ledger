@@ -90,9 +90,11 @@ export type RecordInput = {
 };
 
 export async function upsertRecord(input: RecordInput): Promise<DailyRecord> {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
   const { data, error } = await supabase
     .from("daily_records")
-    .upsert(input, { onConflict: "date" })
+    .upsert({ ...input, user_id: user.id }, { onConflict: "date" })
     .select()
     .single();
   if (error) throw error;
