@@ -1,0 +1,127 @@
+export type Language = "en" | "sw";
+
+const translations: Record<string, Record<Language, string>> = {
+  // Sidebar & Navigation
+  mill_manager: { en: "⚙️ Mill Manager", sw: "⚙️ Meneja Mashine" },
+  dashboard: { en: "Dashboard", sw: "Dashibodi" },
+  add_record: { en: "Add Record", sw: "Ongeza Rekodi" },
+  reports: { en: "Reports", sw: "Ripoti" },
+  sign_out: { en: "Sign Out", sw: "Ondoka" },
+
+  // Header
+  milling_records: { en: "Milling Machine Records", sw: "Rekodi za Mashine ya Kusaga" },
+
+  // Dashboard
+  todays_overview: { en: "Today's overview at a glance", sw: "Muhtasari wa leo kwa haraka" },
+  earnings: { en: "Earnings", sw: "Mapato" },
+  expenses: { en: "Expenses", sw: "Matumizi" },
+  profit: { en: "Profit", sw: "Faida" },
+  electricity: { en: "Electricity", sw: "Umeme" },
+  todays_income: { en: "Today's total income", sw: "Jumla ya mapato ya leo" },
+  food_repairs_other: { en: "Food, repairs & other", sw: "Chakula, matengenezo na mengine" },
+  earnings_minus: { en: "Earnings − expenses − debt", sw: "Mapato − matumizi − deni" },
+  remaining_capacity: { en: "Remaining capacity", sw: "Umeme uliobaki" },
+  units: { en: "units", sw: "vizio" },
+  add_daily_record: { en: "Add Daily Record", sw: "Ongeza Rekodi ya Siku" },
+  view_reports: { en: "View Reports", sw: "Tazama Ripoti" },
+
+  // Add Record Form
+  edit_record: { en: "Edit Record", sw: "Hariri Rekodi" },
+  fill_todays_data: { en: "Fill in today's milling machine data", sw: "Jaza data ya mashine ya kusaga ya leo" },
+  record_details: { en: "Record Details", sw: "Maelezo ya Rekodi" },
+  date: { en: "Date", sw: "Tarehe" },
+  pick_date: { en: "Pick a date", sw: "Chagua tarehe" },
+  money_earned: { en: "Money Earned", sw: "Pesa Iliyopatikana" },
+  money_earned_tip: { en: "Total revenue from milling operations today", sw: "Jumla ya mapato kutoka kwa shughuli za kusaga leo" },
+  food_expense: { en: "Food Expense", sw: "Gharama ya Chakula" },
+  food_expense_tip: { en: "Cost of food/meals for the day", sw: "Gharama ya chakula/milo ya siku" },
+  repair_expense: { en: "Repair Expense", sw: "Gharama ya Matengenezo" },
+  repair_expense_tip: { en: "Any machine repair or maintenance costs", sw: "Gharama yoyote ya kutengeneza au kudumisha mashine" },
+  other_expense: { en: "Other Expense", sw: "Gharama Nyingine" },
+  other_expense_tip: { en: "Miscellaneous expenses not covered above", sw: "Gharama mbalimbali ambazo hazijashughulikiwa hapo juu" },
+  debt: { en: "Debt", sw: "Deni" },
+  debt_tip: { en: "Any outstanding debts or loans taken today", sw: "Madeni au mikopo yoyote iliyochukuliwa leo" },
+  electricity_used: { en: "Electricity Used", sw: "Umeme Uliotumika" },
+  electricity_used_tip: { en: "Units of electricity consumed today", sw: "Vizio vya umeme vilivyotumika leo" },
+  electricity_remaining: { en: "Electricity Remaining", sw: "Umeme Uliobaki" },
+  electricity_remaining_tip: { en: "Remaining electricity units after today's usage", sw: "Vizio vya umeme vilivyobaki baada ya matumizi ya leo" },
+  prefilled_last_record: { en: "Pre-filled from last record", sw: "Imejazwa kutoka rekodi ya mwisho" },
+  calculated_profit: { en: "Calculated Profit", sw: "Faida Iliyohesabiwa" },
+  saving: { en: "Saving...", sw: "Inahifadhi..." },
+  update_record: { en: "Update Record", sw: "Sasisha Rekodi" },
+  save_record: { en: "Save Record", sw: "Hifadhi Rekodi" },
+  record_saved: { en: "Record saved!", sw: "Rekodi imehifadhiwa!" },
+  record_saved_desc: { en: "Daily record has been saved successfully.", sw: "Rekodi ya kila siku imehifadhiwa kwa mafanikio." },
+
+  // Reports
+  monthly_yearly_perf: { en: "Monthly and yearly performance", sw: "Utendaji wa kila mwezi na mwaka" },
+  monthly: { en: "Monthly", sw: "Kila Mwezi" },
+  yearly: { en: "Yearly", sw: "Kila Mwaka" },
+  elec_profit_summary: { en: "Electricity & Profit Summary", sw: "Muhtasari wa Umeme na Faida" },
+  total_units_used: { en: "Total Units Used", sw: "Jumla ya Vizio Vilivyotumika" },
+  total_units_bought: { en: "Total Units Bought", sw: "Jumla ya Vizio Vilivyonunuliwa" },
+  total_earnings: { en: "Total Earnings", sw: "Jumla ya Mapato" },
+  total_expenses_excl: { en: "Total Expenses (excl. elec.)", sw: "Jumla ya Matumizi (bila umeme)" },
+  price_per_unit: { en: "Price per Unit (Tsh)", sw: "Bei kwa Kizio (Tsh)" },
+  leave_empty: { en: "Leave empty to use recorded costs", sw: "Acha tupu kutumia gharama zilizorekodiwa" },
+  electricity_cost: { en: "Electricity Cost", sw: "Gharama ya Umeme" },
+  final_profit: { en: "Final Profit", sw: "Faida ya Mwisho" },
+  earnings_vs_expenses: { en: "Earnings vs Expenses", sw: "Mapato dhidi ya Matumizi" },
+  records: { en: "Records", sw: "Rekodi" },
+  profit_trend: { en: "Profit Trend", sw: "Mwenendo wa Faida" },
+  all_records: { en: "All Records", sw: "Rekodi Zote" },
+  no_records: { en: "No records found", sw: "Hakuna rekodi zilizopatikana" },
+  earned: { en: "Earned", sw: "Ilipatikana" },
+  elec_cost: { en: "Elec. Cost", sw: "Gh. Umeme" },
+  elec_rem: { en: "Elec. Rem.", sw: "Umeme Baki" },
+
+  // Delete dialog
+  delete_record: { en: "Delete Record", sw: "Futa Rekodi" },
+  delete_confirm: { en: "Are you sure you want to delete the record for", sw: "Una uhakika unataka kufuta rekodi ya" },
+  cannot_undo: { en: "This cannot be undone.", sw: "Hii haiwezi kutenduliwa." },
+  cancel: { en: "Cancel", sw: "Ghairi" },
+  delete: { en: "Delete", sw: "Futa" },
+  deleting: { en: "Deleting...", sw: "Inafuta..." },
+  record_deleted: { en: "Record deleted", sw: "Rekodi imefutwa" },
+
+  // Auth
+  sign_in: { en: "Sign In", sw: "Ingia" },
+  sign_up: { en: "Sign Up", sw: "Jisajili" },
+  sign_in_desc: { en: "Sign in to your account", sw: "Ingia kwenye akaunti yako" },
+  sign_up_desc: { en: "Create a new account", sw: "Fungua akaunti mpya" },
+  email: { en: "Email", sw: "Barua pepe" },
+  password: { en: "Password", sw: "Nenosiri" },
+  please_wait: { en: "Please wait...", sw: "Tafadhali subiri..." },
+  no_account: { en: "Don't have an account?", sw: "Huna akaunti?" },
+  have_account: { en: "Already have an account?", sw: "Tayari una akaunti?" },
+  account_created: { en: "Account created!", sw: "Akaunti imeundwa!" },
+  now_logged_in: { en: "You are now logged in.", sw: "Umeingia sasa." },
+  error: { en: "Error", sw: "Hitilafu" },
+
+  // Months
+  january: { en: "January", sw: "Januari" },
+  february: { en: "February", sw: "Februari" },
+  march: { en: "March", sw: "Machi" },
+  april: { en: "April", sw: "Aprili" },
+  may: { en: "May", sw: "Mei" },
+  june: { en: "June", sw: "Juni" },
+  july: { en: "July", sw: "Julai" },
+  august: { en: "August", sw: "Agosti" },
+  september: { en: "September", sw: "Septemba" },
+  october: { en: "October", sw: "Oktoba" },
+  november: { en: "November", sw: "Novemba" },
+  december: { en: "December", sw: "Desemba" },
+};
+
+const monthKeys = [
+  "january", "february", "march", "april", "may", "june",
+  "july", "august", "september", "october", "november", "december",
+];
+
+export function translate(key: string, lang: Language): string {
+  return translations[key]?.[lang] ?? key;
+}
+
+export function getMonthName(index: number, lang: Language): string {
+  return translate(monthKeys[index], lang);
+}

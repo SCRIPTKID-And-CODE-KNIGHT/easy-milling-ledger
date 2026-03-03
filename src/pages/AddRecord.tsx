@@ -18,6 +18,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { cn } from "@/lib/utils";
 import { upsertRecord, fetchRecordByDate, fetchLatestRecord } from "@/lib/queries";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const schema = z.object({
   date: z.date({ required_error: "Date is required" }),
@@ -50,18 +51,14 @@ const AddRecord = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { t } = useLanguage();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       date: editDate ? new Date(editDate + "T00:00:00") : new Date(),
-      money_earned: 0,
-      food_expense: 0,
-      repair_expense: 0,
-      other_expense: 0,
-      debt: 0,
-      electricity_used: 0,
-      electricity_remaining: 0,
+      money_earned: 0, food_expense: 0, repair_expense: 0,
+      other_expense: 0, debt: 0, electricity_used: 0, electricity_remaining: 0,
     },
   });
 
@@ -100,25 +97,21 @@ const AddRecord = () => {
     mutationFn: (values: FormValues) =>
       upsertRecord({
         date: format(values.date, "yyyy-MM-dd"),
-        money_earned: values.money_earned,
-        food_expense: values.food_expense,
-        repair_expense: values.repair_expense,
-        other_expense: values.other_expense,
-        debt: values.debt,
-        electricity_used: values.electricity_used,
+        money_earned: values.money_earned, food_expense: values.food_expense,
+        repair_expense: values.repair_expense, other_expense: values.other_expense,
+        debt: values.debt, electricity_used: values.electricity_used,
         electricity_remaining: values.electricity_remaining,
-        electricity_units_bought: 0,
-        electricity_cost: 0,
+        electricity_units_bought: 0, electricity_cost: 0,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todayRecord"] });
       queryClient.invalidateQueries({ queryKey: ["latestRecord"] });
       queryClient.invalidateQueries({ queryKey: ["record"] });
-      toast({ title: "Record saved!", description: "Daily record has been saved successfully." });
+      toast({ title: t("record_saved"), description: t("record_saved_desc") });
       navigate("/");
     },
     onError: (err: any) => {
-      toast({ title: "Error", description: err.message, variant: "destructive" });
+      toast({ title: t("error"), description: err.message, variant: "destructive" });
     },
   });
 
@@ -130,27 +123,26 @@ const AddRecord = () => {
       <div className="max-w-2xl mx-auto space-y-6">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">
-            {existingRecord ? "Edit Record" : "Add Daily Record"}
+            {existingRecord ? t("edit_record") : t("add_daily_record")}
           </h2>
-          <p className="text-muted-foreground">Fill in today's milling machine data</p>
+          <p className="text-muted-foreground">{t("fill_todays_data")}</p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Record Details</CardTitle>
+            <CardTitle className="text-lg">{t("record_details")}</CardTitle>
           </CardHeader>
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit((v) => mutation.mutate(v))} className="space-y-5">
-                {/* Date */}
                 <FormField control={form.control} name="date" render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Date</FormLabel>
+                    <FormLabel>{t("date")}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button variant="outline" className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-                            {field.value ? format(field.value, "PPP") : "Pick a date"}
+                            {field.value ? format(field.value, "PPP") : t("pick_date")}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
@@ -163,82 +155,74 @@ const AddRecord = () => {
                   </FormItem>
                 )} />
 
-                {/* Money fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="money_earned" render={({ field }) => (
                     <FormItem>
-                      <FormLabel><FieldWithTooltip label="Money Earned" tooltip="Total revenue from milling operations today" /></FormLabel>
+                      <FormLabel><FieldWithTooltip label={t("money_earned")} tooltip={t("money_earned_tip")} /></FormLabel>
                       <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
-
                   <FormField control={form.control} name="food_expense" render={({ field }) => (
                     <FormItem>
-                      <FormLabel><FieldWithTooltip label="Food Expense" tooltip="Cost of food/meals for the day" /></FormLabel>
+                      <FormLabel><FieldWithTooltip label={t("food_expense")} tooltip={t("food_expense_tip")} /></FormLabel>
                       <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
-
                   <FormField control={form.control} name="repair_expense" render={({ field }) => (
                     <FormItem>
-                      <FormLabel><FieldWithTooltip label="Repair Expense" tooltip="Any machine repair or maintenance costs" /></FormLabel>
+                      <FormLabel><FieldWithTooltip label={t("repair_expense")} tooltip={t("repair_expense_tip")} /></FormLabel>
                       <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
-
                   <FormField control={form.control} name="other_expense" render={({ field }) => (
                     <FormItem>
-                      <FormLabel><FieldWithTooltip label="Other Expense" tooltip="Miscellaneous expenses not covered above" /></FormLabel>
+                      <FormLabel><FieldWithTooltip label={t("other_expense")} tooltip={t("other_expense_tip")} /></FormLabel>
                       <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
-
                   <FormField control={form.control} name="debt" render={({ field }) => (
                     <FormItem>
-                      <FormLabel><FieldWithTooltip label="Debt" tooltip="Any outstanding debts or loans taken today" /></FormLabel>
+                      <FormLabel><FieldWithTooltip label={t("debt")} tooltip={t("debt_tip")} /></FormLabel>
                       <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                 </div>
 
-                {/* Electricity */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField control={form.control} name="electricity_used" render={({ field }) => (
                     <FormItem>
-                      <FormLabel><FieldWithTooltip label="Electricity Used" tooltip="Units of electricity consumed today" /></FormLabel>
+                      <FormLabel><FieldWithTooltip label={t("electricity_used")} tooltip={t("electricity_used_tip")} /></FormLabel>
                       <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
-
                   <FormField control={form.control} name="electricity_remaining" render={({ field }) => (
                     <FormItem>
-                      <FormLabel><FieldWithTooltip label="Electricity Remaining" tooltip="Remaining electricity units after today's usage" /></FormLabel>
+                      <FormLabel><FieldWithTooltip label={t("electricity_remaining")} tooltip={t("electricity_remaining_tip")} /></FormLabel>
                       <FormControl><Input type="number" step="0.01" min="0" {...field} /></FormControl>
-                      <FormDescription className="text-xs">Pre-filled from last record</FormDescription>
+                      <FormDescription className="text-xs">{t("prefilled_last_record")}</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )} />
                 </div>
 
-                {/* Profit preview */}
                 <div className={cn(
                   "rounded-lg border p-4 text-center",
                   calcProfit >= 0 ? "bg-success/10 border-success/30" : "bg-destructive/10 border-destructive/30"
                 )}>
-                  <p className="text-sm text-muted-foreground">Calculated Profit</p>
+                  <p className="text-sm text-muted-foreground">{t("calculated_profit")}</p>
                   <p className={cn("text-3xl font-bold font-mono", calcProfit >= 0 ? "text-success" : "text-destructive")}>
                     Tsh {calcProfit.toLocaleString()}
                   </p>
                 </div>
 
                 <Button type="submit" className="w-full" size="lg" disabled={mutation.isPending}>
-                  {mutation.isPending ? "Saving..." : existingRecord ? "Update Record" : "Save Record"}
+                  {mutation.isPending ? t("saving") : existingRecord ? t("update_record") : t("save_record")}
                 </Button>
               </form>
             </Form>
