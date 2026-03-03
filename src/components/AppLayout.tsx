@@ -1,7 +1,9 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
+  const { t } = useLanguage();
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -9,7 +11,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="flex-1 flex flex-col min-w-0">
           <header className="h-14 flex items-center border-b px-4 bg-card">
             <SidebarTrigger className="mr-3" />
-            <h1 className="text-lg font-semibold tracking-tight">Milling Machine Records</h1>
+            <h1 className="text-lg font-semibold tracking-tight">{t("milling_records")}</h1>
           </header>
           <main className="flex-1 p-4 md:p-6 overflow-auto">
             {children}
