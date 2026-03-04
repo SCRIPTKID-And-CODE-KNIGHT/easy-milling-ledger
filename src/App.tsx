@@ -5,18 +5,26 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { LanguageProvider } from "@/hooks/useLanguage";
+import { BusinessTypeProvider, useBusinessType } from "@/hooks/useBusinessType";
 import Index from "./pages/Index";
 import AddRecord from "./pages/AddRecord";
 import Reports from "./pages/Reports";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import SelectBusiness from "./pages/SelectBusiness";
+import ShopDashboard from "./pages/shop/ShopDashboard";
+import ShopProducts from "./pages/shop/ShopProducts";
+import ShopAddRecord from "./pages/shop/ShopAddRecord";
+import ShopReports from "./pages/shop/ShopReports";
 
 const queryClient = new QueryClient();
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  const { businessType, loading: btLoading } = useBusinessType();
+  if (loading || btLoading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   if (!user) return <Navigate to="/auth" replace />;
+  if (!businessType) return <Navigate to="/select-business" replace />;
   return <>{children}</>;
 }
 
@@ -27,12 +35,26 @@ function AuthRoute() {
   return <Auth />;
 }
 
+function SelectBusinessRoute() {
+  const { user, loading } = useAuth();
+  const { businessType, loading: btLoading } = useBusinessType();
+  if (loading || btLoading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (!user) return <Navigate to="/auth" replace />;
+  if (businessType) return <Navigate to={businessType === "shop" ? "/shop" : "/"} replace />;
+  return <SelectBusiness />;
+}
+
 const AppRoutes = () => (
   <Routes>
     <Route path="/auth" element={<AuthRoute />} />
+    <Route path="/select-business" element={<SelectBusinessRoute />} />
     <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
     <Route path="/add-record" element={<ProtectedRoute><AddRecord /></ProtectedRoute>} />
     <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+    <Route path="/shop" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
+    <Route path="/shop/products" element={<ProtectedRoute><ShopProducts /></ProtectedRoute>} />
+    <Route path="/shop/add-record" element={<ProtectedRoute><ShopAddRecord /></ProtectedRoute>} />
+    <Route path="/shop/reports" element={<ProtectedRoute><ShopReports /></ProtectedRoute>} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
@@ -40,15 +62,17 @@ const AppRoutes = () => (
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </TooltipProvider>
-      </LanguageProvider>
+      <BusinessTypeProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </TooltipProvider>
+        </LanguageProvider>
+      </BusinessTypeProvider>
     </AuthProvider>
   </QueryClientProvider>
 );
