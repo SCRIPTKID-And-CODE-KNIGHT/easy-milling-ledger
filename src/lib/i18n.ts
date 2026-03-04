@@ -2,14 +2,71 @@ export type Language = "en" | "sw";
 
 const translations: Record<string, Record<Language, string>> = {
   // Sidebar & Navigation
-  mill_manager: { en: "⚙️ Mill Manager", sw: "⚙️ Meneja Mashine" },
+  mill_manager: { en: "🏪 Biashara Bora", sw: "🏪 Biashara Bora" },
   dashboard: { en: "Dashboard", sw: "Dashibodi" },
   add_record: { en: "Add Record", sw: "Ongeza Rekodi" },
   reports: { en: "Reports", sw: "Ripoti" },
   sign_out: { en: "Sign Out", sw: "Ondoka" },
 
   // Header
-  milling_records: { en: "Milling Machine Records", sw: "Rekodi za Mashine ya Kusaga" },
+  milling_records: { en: "Biashara Bora System", sw: "Mfumo wa Biashara Bora" },
+
+  // Business type selection
+  select_business_desc: { en: "Select the type of business you manage", sw: "Chagua aina ya biashara unayoiendesha" },
+  milling_machine: { en: "Milling Machine", sw: "Mashine ya Kusaga" },
+  milling_desc: { en: "Track milling operations, electricity, and daily earnings", sw: "Fuatilia shughuli za kusaga, umeme, na mapato ya kila siku" },
+  shop_business: { en: "Shop Business", sw: "Biashara ya Duka" },
+  shop_desc: { en: "Manage inventory, sales, and daily shop expenses", sw: "Simamia bidhaa, mauzo, na matumizi ya duka" },
+  switch_business: { en: "Switch Business", sw: "Badilisha Biashara" },
+
+  // Shop Navigation
+  shop_dashboard: { en: "Shop Dashboard", sw: "Dashibodi ya Duka" },
+  products: { en: "Products", sw: "Bidhaa" },
+  add_shop_record: { en: "Add Shop Record", sw: "Ongeza Rekodi ya Duka" },
+  shop_reports: { en: "Shop Reports", sw: "Ripoti za Duka" },
+  manage_products: { en: "Manage Products", sw: "Simamia Bidhaa" },
+  manage_inventory: { en: "Manage your product inventory", sw: "Simamia hesabu ya bidhaa zako" },
+
+  // Shop Dashboard
+  todays_sales: { en: "Today's Sales", sw: "Mauzo ya Leo" },
+  total_products: { en: "Total Products", sw: "Jumla ya Bidhaa" },
+  low_stock: { en: "Low Stock", sw: "Hifadhi Chini" },
+
+  // Products
+  add_product: { en: "Add Product", sw: "Ongeza Bidhaa" },
+  edit_product: { en: "Edit Product", sw: "Hariri Bidhaa" },
+  product_name: { en: "Product Name", sw: "Jina la Bidhaa" },
+  buying_price: { en: "Buying Price", sw: "Bei ya Kununua" },
+  selling_price: { en: "Selling Price", sw: "Bei ya Kuuza" },
+  stock: { en: "Stock", sw: "Hifadhi" },
+  unit: { en: "Unit", sw: "Kipimo" },
+  piece: { en: "Piece", sw: "Kipande" },
+  litre: { en: "Litre", sw: "Lita" },
+  pack: { en: "Pack", sw: "Pakiti" },
+  no_products: { en: "No products yet", sw: "Hakuna bidhaa bado" },
+  product_saved: { en: "Product saved!", sw: "Bidhaa imehifadhiwa!" },
+  product_deleted: { en: "Product deleted", sw: "Bidhaa imefutwa" },
+  delete_product: { en: "Delete Product", sw: "Futa Bidhaa" },
+  delete_product_confirm: { en: "Are you sure you want to delete", sw: "Una uhakika unataka kufuta" },
+  save: { en: "Save", sw: "Hifadhi" },
+
+  // Shop Records
+  record_daily_shop_data: { en: "Record daily shop sales and expenses", sw: "Rekodi mauzo na matumizi ya duka ya kila siku" },
+  sales: { en: "Sales", sw: "Mauzo" },
+  add_sale: { en: "Add Sale", sw: "Ongeza Mauzo" },
+  no_sales_added: { en: "No sales added yet. Click 'Add Sale' to start.", sw: "Hakuna mauzo bado. Bonyeza 'Ongeza Mauzo' kuanza." },
+  product: { en: "Product", sw: "Bidhaa" },
+  select_product: { en: "Select product", sw: "Chagua bidhaa" },
+  qty: { en: "Qty", sw: "Idadi" },
+  price: { en: "Price", sw: "Bei" },
+  total: { en: "Total", sw: "Jumla" },
+  rent_expense: { en: "Rent Expense", sw: "Gharama ya Kodi" },
+
+  // Shop Reports
+  sales_vs_expenses: { en: "Sales vs Expenses", sw: "Mauzo dhidi ya Matumizi" },
+  total_sales_month: { en: "Total Sales (Month)", sw: "Jumla ya Mauzo (Mwezi)" },
+  total_expenses: { en: "Total Expenses", sw: "Jumla ya Matumizi" },
+  total_profit: { en: "Total Profit", sw: "Jumla ya Faida" },
 
   // Dashboard
   todays_overview: { en: "Today's overview at a glance", sw: "Muhtasari wa leo kwa haraka" },

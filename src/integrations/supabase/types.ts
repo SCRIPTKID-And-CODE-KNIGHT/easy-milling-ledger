@@ -68,6 +68,146 @@ export type Database = {
         }
         Relationships: []
       }
+      shop_daily_records: {
+        Row: {
+          created_at: string
+          date: string
+          debt: number
+          food_expense: number
+          id: string
+          other_expense: number
+          profit: number | null
+          rent_expense: number
+          total_cost_of_goods: number
+          total_sales: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          debt?: number
+          food_expense?: number
+          id?: string
+          other_expense?: number
+          profit?: number | null
+          rent_expense?: number
+          total_cost_of_goods?: number
+          total_sales?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          debt?: number
+          food_expense?: number
+          id?: string
+          other_expense?: number
+          profit?: number | null
+          rent_expense?: number
+          total_cost_of_goods?: number
+          total_sales?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      shop_products: {
+        Row: {
+          buying_price: number
+          created_at: string
+          id: string
+          name: string
+          selling_price: number
+          stock_quantity: number
+          unit: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          buying_price?: number
+          created_at?: string
+          id?: string
+          name: string
+          selling_price?: number
+          stock_quantity?: number
+          unit?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          buying_price?: number
+          created_at?: string
+          id?: string
+          name?: string
+          selling_price?: number
+          stock_quantity?: number
+          unit?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      shop_sales: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          product_id: string
+          quantity_sold: number
+          sale_price: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          product_id: string
+          quantity_sold?: number
+          sale_price?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          product_id?: string
+          quantity_sold?: number
+          sale_price?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shop_sales_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "shop_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_business_type: {
+        Row: {
+          business_type: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          business_type: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          business_type?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
