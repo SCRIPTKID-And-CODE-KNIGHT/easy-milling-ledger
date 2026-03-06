@@ -154,6 +154,18 @@ const translations: Record<string, Record<Language, string>> = {
   landing_feature_shop_desc: { en: "Manage inventory, record sales, and track daily shop expenses", sw: "Simamia bidhaa, rekodi mauzo, na fuatilia matumizi ya duka" },
   landing_feature_reports: { en: "Reports & Analytics", sw: "Ripoti na Uchambuzi" },
   landing_feature_reports_desc: { en: "View monthly and yearly performance with charts and summaries", sw: "Tazama utendaji wa kila mwezi na mwaka kwa chati na muhtasari" },
+  landing_badge: { en: "Smart Business Management", sw: "Usimamizi Bora wa Biashara" },
+  landing_stat_track: { en: "Track Everything", sw: "Fuatilia Kila Kitu" },
+  landing_stat_track_desc: { en: "Earnings, expenses & inventory", sw: "Mapato, matumizi na bidhaa" },
+  landing_stat_secure: { en: "Secure & Private", sw: "Salama na Faragha" },
+  landing_stat_secure_desc: { en: "Your data stays protected", sw: "Data yako inalindwa" },
+  landing_stat_fast: { en: "Fast & Simple", sw: "Haraka na Rahisi" },
+  landing_stat_fast_desc: { en: "Easy to use, no training needed", sw: "Rahisi kutumia, hakuna mafunzo" },
+  landing_features_heading: { en: "Everything You Need", sw: "Kila Unachohitaji" },
+  landing_features_sub: { en: "Powerful tools designed for small business owners in Tanzania", sw: "Zana zenye nguvu zilizobuniwa kwa wamiliki wa biashara ndogo Tanzania" },
+  landing_cta_title: { en: "Ready to grow your business?", sw: "Uko tayari kukuza biashara yako?" },
+  landing_cta_desc: { en: "Join hundreds of business owners already using Biashara Bora", sw: "Jiunge na mamia ya wamiliki wa biashara wanaotumia Biashara Bora" },
+  landing_cta_button: { en: "Get Started Free", sw: "Anza Bure" },
 
   // Auth
   sign_in: { en: "Sign In", sw: "Ingia" },
