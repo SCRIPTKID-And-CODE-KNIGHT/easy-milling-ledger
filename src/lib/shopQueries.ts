@@ -131,6 +131,13 @@ export async function recordSale(sale: { date: string; product_id: string; quant
   }
 }
 
+export async function restockProduct(id: string, addQuantity: number): Promise<void> {
+  const { data: product, error: fetchErr } = await db().from("shop_products").select("stock_quantity").eq("id", id).single();
+  if (fetchErr) throw fetchErr;
+  const { error } = await db().from("shop_products").update({ stock_quantity: (product?.stock_quantity ?? 0) + addQuantity }).eq("id", id);
+  if (error) throw error;
+}
+
 export async function fetchSalesByDate(date: string): Promise<(ShopSale & { product_name?: string })[]> {
   const { data, error } = await db().from("shop_sales").select("*, shop_products(name)").eq("date", date).order("created_at");
   if (error) throw error;

@@ -26,6 +26,10 @@ const translations: Record<string, Record<Language, string>> = {
   shop_reports: { en: "Shop Reports", sw: "Ripoti za Duka" },
   manage_products: { en: "Manage Products", sw: "Simamia Bidhaa" },
   manage_inventory: { en: "Manage your product inventory", sw: "Simamia hesabu ya bidhaa zako" },
+  restock: { en: "Restock", sw: "Ongeza Hifadhi" },
+  current_stock: { en: "Current stock", sw: "Hifadhi ya sasa" },
+  quantity_to_add: { en: "Quantity to add", sw: "Kiasi cha kuongeza" },
+  stock_updated: { en: "Stock updated", sw: "Hifadhi imesasishwa" },
 
   // Shop Dashboard
   todays_sales: { en: "Today's Sales", sw: "Mauzo ya Leo" },

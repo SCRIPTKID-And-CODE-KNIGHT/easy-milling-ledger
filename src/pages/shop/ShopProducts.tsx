@@ -8,10 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { fetchProducts, upsertProduct, deleteProduct, type ShopProduct } from "@/lib/shopQueries";
+import { fetchProducts, upsertProduct, deleteProduct, restockProduct, type ShopProduct } from "@/lib/shopQueries";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, PackagePlus } from "lucide-react";
 
 const emptyProduct = { name: "", buying_price: 0, selling_price: 0, stock_quantity: 0, unit: "piece" };
 
@@ -22,6 +22,8 @@ const ShopProducts = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Partial<ShopProduct> | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<ShopProduct | null>(null);
+  const [restockTarget, setRestockTarget] = useState<ShopProduct | null>(null);
+  const [restockQty, setRestockQty] = useState(0);
 
   const { data: products = [] } = useQuery({ queryKey: ["shopProducts"], queryFn: fetchProducts });
 
@@ -42,6 +44,17 @@ const ShopProducts = () => {
       queryClient.invalidateQueries({ queryKey: ["shopProducts"] });
       toast({ title: t("product_deleted") });
       setDeleteTarget(null);
+    },
+    onError: (e: any) => toast({ title: t("error"), description: e.message, variant: "destructive" }),
+  });
+
+  const restockMutation = useMutation({
+    mutationFn: ({ id, qty }: { id: string; qty: number }) => restockProduct(id, qty),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["shopProducts"] });
+      toast({ title: t("stock_updated") });
+      setRestockTarget(null);
+      setRestockQty(0);
     },
     onError: (e: any) => toast({ title: t("error"), description: e.message, variant: "destructive" }),
   });
@@ -91,6 +104,7 @@ const ShopProducts = () => {
                       <TableCell>{p.unit}</TableCell>
                       <TableCell>
                         <div className="flex gap-1 justify-end">
+                          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => { setRestockTarget(p); setRestockQty(0); }} title={t("restock")}><PackagePlus className="h-3.5 w-3.5" /></Button>
                           <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => openEdit(p)}><Pencil className="h-3.5 w-3.5" /></Button>
                           <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => setDeleteTarget(p)}><Trash2 className="h-3.5 w-3.5" /></Button>
                         </div>
@@ -147,6 +161,23 @@ const ShopProducts = () => {
             <Button variant="outline" onClick={() => setDeleteTarget(null)}>{t("cancel")}</Button>
             <Button variant="destructive" onClick={() => deleteTarget && deleteMutation.mutate(deleteTarget.id)} disabled={deleteMutation.isPending}>
               {deleteMutation.isPending ? t("deleting") : t("delete")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      {/* Restock Dialog */}
+      <Dialog open={!!restockTarget} onOpenChange={() => { setRestockTarget(null); setRestockQty(0); }}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>{t("restock")} — {restockTarget?.name}</DialogTitle></DialogHeader>
+          <p className="text-sm text-muted-foreground">{t("current_stock")}: <span className="font-mono font-semibold">{restockTarget?.stock_quantity}</span></p>
+          <div>
+            <Label>{t("quantity_to_add")}</Label>
+            <Input type="number" min="1" value={restockQty || ""} onChange={(e) => setRestockQty(Math.max(0, +e.target.value))} />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setRestockTarget(null)}>{t("cancel")}</Button>
+            <Button onClick={() => restockTarget && restockQty > 0 && restockMutation.mutate({ id: restockTarget.id, qty: restockQty })} disabled={restockMutation.isPending || restockQty <= 0}>
+              {restockMutation.isPending ? t("saving") : t("restock")}
             </Button>
           </DialogFooter>
         </DialogContent>
