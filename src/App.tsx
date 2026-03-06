@@ -12,6 +12,7 @@ import Reports from "./pages/Reports";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import SelectBusiness from "./pages/SelectBusiness";
+import Landing from "./pages/Landing";
 import ShopDashboard from "./pages/shop/ShopDashboard";
 import ShopProducts from "./pages/shop/ShopProducts";
 import ShopAddRecord from "./pages/shop/ShopAddRecord";
@@ -23,7 +24,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const { businessType, loading: btLoading } = useBusinessType();
   if (loading || btLoading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  if (!user) return <Navigate to="/auth" replace />;
+  if (!user) return <Navigate to="/" replace />;
   if (!businessType) return <Navigate to="/select-business" replace />;
   return <>{children}</>;
 }
@@ -31,24 +32,34 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 function AuthRoute() {
   const { user, loading } = useAuth();
   if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  if (user) return <Navigate to="/" replace />;
+  if (user) return <Navigate to="/dashboard" replace />;
   return <Auth />;
+}
+
+function LandingRoute() {
+  const { user, loading } = useAuth();
+  const { businessType, loading: btLoading } = useBusinessType();
+  if (loading || btLoading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (user && businessType) return <Navigate to={businessType === "shop" ? "/shop" : "/dashboard"} replace />;
+  if (user && !businessType) return <Navigate to="/select-business" replace />;
+  return <Landing />;
 }
 
 function SelectBusinessRoute() {
   const { user, loading } = useAuth();
   const { businessType, loading: btLoading } = useBusinessType();
   if (loading || btLoading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  if (!user) return <Navigate to="/auth" replace />;
-  if (businessType) return <Navigate to={businessType === "shop" ? "/shop" : "/"} replace />;
+  if (!user) return <Navigate to="/" replace />;
+  if (businessType) return <Navigate to={businessType === "shop" ? "/shop" : "/dashboard"} replace />;
   return <SelectBusiness />;
 }
 
 const AppRoutes = () => (
   <Routes>
+    <Route path="/" element={<LandingRoute />} />
     <Route path="/auth" element={<AuthRoute />} />
     <Route path="/select-business" element={<SelectBusinessRoute />} />
-    <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+    <Route path="/dashboard" element={<ProtectedRoute><Index /></ProtectedRoute>} />
     <Route path="/add-record" element={<ProtectedRoute><AddRecord /></ProtectedRoute>} />
     <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
     <Route path="/shop" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
