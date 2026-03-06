@@ -27,7 +27,7 @@ export function AppSidebar() {
   const navigate = useNavigate();
 
   const millingItems = [
-    { title: t("dashboard"), url: "/", icon: LayoutDashboard },
+    { title: t("dashboard"), url: "/dashboard", icon: LayoutDashboard },
     { title: t("add_record"), url: "/add-record", icon: PlusCircle },
     { title: t("reports"), url: "/reports", icon: BarChart3 },
   ];
@@ -44,7 +44,7 @@ export function AppSidebar() {
   const handleSwitch = async () => {
     const newType = businessType === "shop" ? "milling" : "shop";
     await setBusinessType(newType);
-    navigate(newType === "shop" ? "/shop" : "/");
+    navigate(newType === "shop" ? "/shop" : "/dashboard");
   };
 
   return (
@@ -61,7 +61,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/" || item.url === "/shop"}
+                      end={item.url === "/dashboard" || item.url === "/shop"}
                       className="hover:bg-sidebar-accent/50 transition-colors"
                       activeClassName="bg-sidebar-accent text-sidebar-primary font-semibold"
                     >

@@ -145,6 +145,16 @@ const translations: Record<string, Record<Language, string>> = {
   deleting: { en: "Deleting...", sw: "Inafuta..." },
   record_deleted: { en: "Record deleted", sw: "Rekodi imefutwa" },
 
+  // Landing page
+  landing_hero_title: { en: "Manage Your Business Smarter", sw: "Simamia Biashara Yako kwa Akili" },
+  landing_hero_desc: { en: "Track earnings, expenses, inventory and sales — all in one place", sw: "Fuatilia mapato, matumizi, bidhaa na mauzo — yote sehemu moja" },
+  landing_feature_milling: { en: "Milling Machine Management", sw: "Usimamizi wa Mashine ya Kusaga" },
+  landing_feature_milling_desc: { en: "Track daily earnings, electricity usage, and expenses for your milling operations", sw: "Fuatilia mapato ya kila siku, matumizi ya umeme, na gharama za shughuli za kusaga" },
+  landing_feature_shop: { en: "Shop Business Management", sw: "Usimamizi wa Biashara ya Duka" },
+  landing_feature_shop_desc: { en: "Manage inventory, record sales, and track daily shop expenses", sw: "Simamia bidhaa, rekodi mauzo, na fuatilia matumizi ya duka" },
+  landing_feature_reports: { en: "Reports & Analytics", sw: "Ripoti na Uchambuzi" },
+  landing_feature_reports_desc: { en: "View monthly and yearly performance with charts and summaries", sw: "Tazama utendaji wa kila mwezi na mwaka kwa chati na muhtasari" },
+
   // Auth
   sign_in: { en: "Sign In", sw: "Ingia" },
   sign_up: { en: "Sign Up", sw: "Jisajili" },
