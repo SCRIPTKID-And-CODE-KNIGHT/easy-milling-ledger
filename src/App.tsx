@@ -18,6 +18,8 @@ import ShopDashboard from "./pages/shop/ShopDashboard";
 import ShopProducts from "./pages/shop/ShopProducts";
 import ShopAddRecord from "./pages/shop/ShopAddRecord";
 import ShopReports from "./pages/shop/ShopReports";
+import ShopCustomers from "./pages/shop/ShopCustomers";
+import CustomerDetail from "./pages/shop/CustomerDetail";
 
 const queryClient = new QueryClient();
 
