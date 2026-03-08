@@ -89,6 +89,10 @@ export function AppSidebar() {
           <Languages className="mr-2 h-4 w-4" />
           {!collapsed && (language === "en" ? "Swahili" : "English")}
         </Button>
+        <Button variant="ghost" size="sm" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="w-full justify-start text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent">
+          {theme === "dark" ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+          {!collapsed && (theme === "dark" ? t("light_mode") : t("dark_mode"))}
+        </Button>
         <Button variant="ghost" size="sm" onClick={signOut} className="w-full justify-start text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent">
           <LogOut className="mr-2 h-4 w-4" />
           {!collapsed && t("sign_out")}

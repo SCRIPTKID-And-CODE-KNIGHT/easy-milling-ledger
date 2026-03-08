@@ -44,7 +44,10 @@ export default function Landing() {
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 py-4 border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
         <span className="text-xl font-bold tracking-tight">🏪 Biashara Bora</span>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
+          <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="h-9 w-9">
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </Button>
           <Button asChild variant="ghost" size="sm">
             <Link to="/auth">{t("sign_in")}</Link>
           </Button>
