@@ -130,8 +130,9 @@ const ShopProducts = () => {
               <div><Label>{t("buying_price")}</Label><Input type="number" min="0" value={editing?.buying_price ?? 0} onChange={(e) => setEditing((p) => ({ ...p!, buying_price: +e.target.value }))} /></div>
               <div><Label>{t("selling_price")}</Label><Input type="number" min="0" value={editing?.selling_price ?? 0} onChange={(e) => setEditing((p) => ({ ...p!, selling_price: +e.target.value }))} /></div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div><Label>{t("stock")}</Label><Input type="number" min="0" value={editing?.stock_quantity ?? 0} onChange={(e) => setEditing((p) => ({ ...p!, stock_quantity: +e.target.value }))} /></div>
+              <div><Label>{t("low_stock_threshold")}</Label><Input type="number" min="0" value={editing?.low_stock_threshold ?? 5} onChange={(e) => setEditing((p) => ({ ...p!, low_stock_threshold: +e.target.value }))} /></div>
               <div>
                 <Label>{t("unit")}</Label>
                 <Select value={editing?.unit ?? "piece"} onValueChange={(v) => setEditing((p) => ({ ...p!, unit: v }))}>

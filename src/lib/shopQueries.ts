@@ -9,6 +9,7 @@ export type ShopProduct = {
   selling_price: number;
   stock_quantity: number;
   unit: string;
+  low_stock_threshold: number;
   created_at: string;
   updated_at: string;
 };

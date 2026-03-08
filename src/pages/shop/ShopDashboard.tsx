@@ -82,6 +82,23 @@ const ShopDashboard = () => {
           </Card>
         </div>
 
+        {lowStock.length > 0 && (
+          <Alert variant="destructive" className="border-warning/50 bg-warning/10 text-warning-foreground">
+            <AlertTriangle className="h-4 w-4 !text-warning" />
+            <AlertTitle className="text-warning">{t("low_stock_alert")}</AlertTitle>
+            <AlertDescription className="text-foreground">
+              {t("low_stock_alert_desc")}
+              <ul className="mt-2 space-y-1">
+                {lowStock.map((p) => (
+                  <li key={p.id} className="text-sm font-mono">
+                    • {p.name} — <span className="font-semibold">{p.stock_quantity}</span> {p.unit} {t("remaining") || "remaining"}
+                  </li>
+                ))}
+              </ul>
+            </AlertDescription>
+          </Alert>
+        )}
+
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
             <Link to="/shop/add-record">
