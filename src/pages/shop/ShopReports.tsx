@@ -71,7 +71,7 @@ const ShopReports = () => {
           <p className="text-muted-foreground">{t("monthly_yearly_perf")}</p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 items-center">
           <Select value={String(year)} onValueChange={(v) => setYear(Number(v))}>
             <SelectTrigger className="w-[120px]"><SelectValue /></SelectTrigger>
             <SelectContent>{years.map((y) => <SelectItem key={y} value={String(y)}>{y}</SelectItem>)}</SelectContent>
@@ -82,6 +82,36 @@ const ShopReports = () => {
               <SelectItem key={i} value={String(i + 1)}>{getMonthName(i, language)}</SelectItem>
             ))}</SelectContent>
           </Select>
+          <div className="ml-auto flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => {
+              const headers = [t("date"), t("sales"), t("expenses"), t("debt"), t("profit")];
+              const keys = ["date", "sales", "expenses", "debt", "profit"];
+              const rows = monthRecords.map((r) => ({
+                date: format(new Date(r.date + "T00:00:00"), "MMM d, yyyy"),
+                sales: r.total_sales,
+                expenses: r.food_expense + r.rent_expense + r.other_expense,
+                debt: r.debt,
+                profit: r.profit ?? 0,
+              }));
+              exportToPDF(`${t("shop_reports")} — ${monthName} ${year}`, `shop-${year}-${month}`, headers, rows, keys);
+            }}>
+              <FileDown className="mr-2 h-4 w-4" />{t("export_pdf")}
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => {
+              const headers = [t("date"), t("sales"), t("expenses"), t("debt"), t("profit")];
+              const keys = ["date", "sales", "expenses", "debt", "profit"];
+              const rows = monthRecords.map((r) => ({
+                date: format(new Date(r.date + "T00:00:00"), "MMM d, yyyy"),
+                sales: r.total_sales,
+                expenses: r.food_expense + r.rent_expense + r.other_expense,
+                debt: r.debt,
+                profit: r.profit ?? 0,
+              }));
+              exportToCSV(`shop-${year}-${month}`, headers, rows, keys);
+            }}>
+              <FileSpreadsheet className="mr-2 h-4 w-4" />{t("export_csv")}
+            </Button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

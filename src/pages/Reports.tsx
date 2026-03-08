@@ -122,7 +122,7 @@ const Reports = () => {
           <p className="text-muted-foreground">{t("monthly_yearly_perf")}</p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 items-center">
           <Select value={String(year)} onValueChange={(v) => setYear(Number(v))}>
             <SelectTrigger className="w-[120px]"><SelectValue /></SelectTrigger>
             <SelectContent>{years.map((y) => <SelectItem key={y} value={String(y)}>{y}</SelectItem>)}</SelectContent>
@@ -133,6 +133,40 @@ const Reports = () => {
               <SelectItem key={i} value={String(i + 1)}>{getMonthName(i, language)}</SelectItem>
             ))}</SelectContent>
           </Select>
+          <div className="ml-auto flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => {
+              const headers = [t("date"), t("earned"), t("expenses"), t("debt"), t("profit"), t("elec_cost"), t("elec_rem")];
+              const keys = ["date", "earned", "expenses", "debt", "profit", "elec_cost", "elec_rem"];
+              const rows = monthRecords.map((r) => ({
+                date: format(new Date(r.date + "T00:00:00"), "MMM d, yyyy"),
+                earned: r.money_earned,
+                expenses: r.food_expense + r.repair_expense + r.other_expense,
+                debt: r.debt,
+                profit: r.profit,
+                elec_cost: r.electricity_cost,
+                elec_rem: r.electricity_remaining,
+              }));
+              exportToPDF(`${t("reports")} — ${monthName} ${year}`, `milling-${year}-${month}`, headers, rows, keys);
+            }}>
+              <FileDown className="mr-2 h-4 w-4" />{t("export_pdf")}
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => {
+              const headers = [t("date"), t("earned"), t("expenses"), t("debt"), t("profit"), t("elec_cost"), t("elec_rem")];
+              const keys = ["date", "earned", "expenses", "debt", "profit", "elec_cost", "elec_rem"];
+              const rows = monthRecords.map((r) => ({
+                date: format(new Date(r.date + "T00:00:00"), "MMM d, yyyy"),
+                earned: r.money_earned,
+                expenses: r.food_expense + r.repair_expense + r.other_expense,
+                debt: r.debt,
+                profit: r.profit,
+                elec_cost: r.electricity_cost,
+                elec_rem: r.electricity_remaining,
+              }));
+              exportToCSV(`milling-${year}-${month}`, headers, rows, keys);
+            }}>
+              <FileSpreadsheet className="mr-2 h-4 w-4" />{t("export_csv")}
+            </Button>
+          </div>
         </div>
 
         <Tabs defaultValue="monthly">
