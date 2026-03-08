@@ -1,4 +1,4 @@
-import { LayoutDashboard, PlusCircle, BarChart3, LogOut, Languages, Package, ShoppingCart, ArrowLeftRight } from "lucide-react";
+import { LayoutDashboard, PlusCircle, BarChart3, LogOut, Languages, Package, ShoppingCart, ArrowLeftRight, Moon, Sun } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
