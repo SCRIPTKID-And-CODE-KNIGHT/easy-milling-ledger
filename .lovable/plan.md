@@ -1,35 +1,47 @@
 
 
-## Landing Page for Biashara Bora System
+## 5-Feature Roadmap — Phase-by-Phase Plan
 
-### What will be built
+I will implement these features one at a time across 5 phases. Here is the full plan; after approval I will start with Phase 1.
 
-A public landing page at `/` that visitors see before logging in. It will showcase the system's value proposition with:
+---
 
-1. **Hero section** — "Biashara Bora System" title, tagline describing the business management tool, and CTA buttons for "Sign In" and "Sign Up"
-2. **Features section** — 3 cards highlighting key capabilities: Milling Machine tracking, Shop Inventory & Sales, and Reports & Analytics
-3. **Footer** — Simple copyright line
+### Phase 1: Low-Stock Alerts (configurable threshold)
+- Add a `low_stock_threshold` column (default 5) to `shop_products` table
+- Show alert banner on Shop Dashboard when any product is at/below threshold
+- Allow users to set threshold per product in the product edit dialog
+- Add i18n keys for alert messages
 
-### Routing changes
+### Phase 2: Dark Mode Toggle
+- Add dark mode CSS variables to `index.css` (already has light theme defined)
+- Create a `useTheme` hook using `next-themes` (already installed)
+- Add dark mode toggle button in AppSidebar footer and Landing page navbar
+- Persist theme choice in localStorage
 
-- `/` becomes the public landing page (new `LandingPage.tsx`)
-- Milling dashboard moves to `/dashboard`
-- When logged-in users visit `/`, redirect to `/dashboard` or `/shop` based on business type
-- `ProtectedRoute` redirects unauthenticated users to `/` instead of `/auth`
+### Phase 3: Export to PDF/Excel
+- Install `jspdf` + `jspdf-autotable` for PDF, use native CSV generation for Excel-compatible export
+- Add export buttons on Reports pages (both Milling and Shop)
+- Export current month/year records as PDF table or CSV file
+- Add i18n keys for export labels
 
-### Files
+### Phase 4: Customer Management (CRM)
+- **New database tables**: `customers` (name, phone, notes, user_id) and `customer_transactions` (customer_id, amount, type, date, description, user_id)
+- **New pages**: `/shop/customers` (list/add/edit customers), customer detail page with transaction history
+- Add sidebar navigation item for Customers
+- Track debts per customer with balance calculation
+- RLS policies for user isolation
 
-| File | Action |
-|------|--------|
-| `src/pages/Landing.tsx` | Create — hero, features, CTA |
-| `src/App.tsx` | Edit — add landing route at `/`, move milling dashboard to `/dashboard`, update redirects |
-| `src/lib/i18n.ts` | Edit — add EN/SW translations for landing page text |
-| `src/components/AppSidebar.tsx` | Edit — update dashboard link to `/dashboard` |
+### Phase 5: Multi-Business Support
+- Change `user_business_type` to store an array or multiple rows (one per business type)
+- Update `useBusinessType` hook to support multiple active businesses
+- Update sidebar to show both Milling and Shop nav items when both are selected
+- Update `SelectBusiness` page to allow toggling multiple business types
+- Update routing logic so users can access both `/dashboard` and `/shop`
 
-### i18n keys (sample)
-- `landing_hero_title`: "Manage Your Business Smarter" / "Simamia Biashara Yako kwa Akili"
-- `landing_hero_desc`: "Track earnings, expenses, inventory and sales — all in one place" / "Fuatilia mapato, matumizi, bidhaa na mauzo — yote sehemu moja"
-- `landing_feature_milling`: "Milling Machine Management" / "Usimamizi wa Mashine ya Kusaga"
-- `landing_feature_shop`: "Shop Business Management" / "Usimamizi wa Biashara ya Duka"
-- `landing_feature_reports`: "Reports & Analytics" / "Ripoti na Uchambuzi"
+---
+
+### Implementation Order
+Each phase will be a separate message. After each phase, you can test before moving to the next.
+
+**Starting with Phase 1: Low-Stock Alerts** — the simplest and most immediately useful feature.
 
