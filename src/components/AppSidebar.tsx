@@ -26,6 +26,7 @@ export function AppSidebar() {
   const { t, language, toggleLanguage } = useLanguage();
   const { businessType, setBusinessType } = useBusinessType();
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
 
   const millingItems = [
     { title: t("dashboard"), url: "/dashboard", icon: LayoutDashboard },
