@@ -9,6 +9,9 @@ const translations: Record<string, Record<Language, string>> = {
   sign_out: { en: "Sign Out", sw: "Ondoka" },
   dark_mode: { en: "Dark Mode", sw: "Hali ya Giza" },
   light_mode: { en: "Light Mode", sw: "Hali ya Mwanga" },
+  export_pdf: { en: "Export PDF", sw: "Hamisha PDF" },
+  export_csv: { en: "Export CSV", sw: "Hamisha CSV" },
+  exported: { en: "Exported!", sw: "Imehamishwa!" },
 
   // Header
   milling_records: { en: "Biashara Bora System", sw: "Mfumo wa Biashara Bora" },
