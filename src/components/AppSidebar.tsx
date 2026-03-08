@@ -37,6 +37,7 @@ export function AppSidebar() {
   const shopItems = [
     { title: t("shop_dashboard"), url: "/shop", icon: LayoutDashboard },
     { title: t("products"), url: "/shop/products", icon: Package },
+    { title: t("customers"), url: "/shop/customers", icon: Users },
     { title: t("add_shop_record"), url: "/shop/add-record", icon: PlusCircle },
     { title: t("shop_reports"), url: "/shop/reports", icon: BarChart3 },
   ];
