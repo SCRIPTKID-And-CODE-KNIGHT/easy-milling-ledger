@@ -18,6 +18,8 @@ import ShopDashboard from "./pages/shop/ShopDashboard";
 import ShopProducts from "./pages/shop/ShopProducts";
 import ShopAddRecord from "./pages/shop/ShopAddRecord";
 import ShopReports from "./pages/shop/ShopReports";
+import ShopCustomers from "./pages/shop/ShopCustomers";
+import CustomerDetail from "./pages/shop/CustomerDetail";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +69,8 @@ const AppRoutes = () => (
     <Route path="/shop/products" element={<ProtectedRoute><ShopProducts /></ProtectedRoute>} />
     <Route path="/shop/add-record" element={<ProtectedRoute><ShopAddRecord /></ProtectedRoute>} />
     <Route path="/shop/reports" element={<ProtectedRoute><ShopReports /></ProtectedRoute>} />
+    <Route path="/shop/customers" element={<ProtectedRoute><ShopCustomers /></ProtectedRoute>} />
+    <Route path="/shop/customers/:id" element={<ProtectedRoute><CustomerDetail /></ProtectedRoute>} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
