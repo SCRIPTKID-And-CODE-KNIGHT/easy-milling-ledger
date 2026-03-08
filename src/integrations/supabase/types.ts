@@ -118,6 +118,7 @@ export type Database = {
           buying_price: number
           created_at: string
           id: string
+          low_stock_threshold: number
           name: string
           selling_price: number
           stock_quantity: number
@@ -129,6 +130,7 @@ export type Database = {
           buying_price?: number
           created_at?: string
           id?: string
+          low_stock_threshold?: number
           name: string
           selling_price?: number
           stock_quantity?: number
@@ -140,6 +142,7 @@ export type Database = {
           buying_price?: number
           created_at?: string
           id?: string
+          low_stock_threshold?: number
           name?: string
           selling_price?: number
           stock_quantity?: number

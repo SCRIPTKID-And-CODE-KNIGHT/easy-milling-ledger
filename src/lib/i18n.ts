@@ -35,6 +35,10 @@ const translations: Record<string, Record<Language, string>> = {
   todays_sales: { en: "Today's Sales", sw: "Mauzo ya Leo" },
   total_products: { en: "Total Products", sw: "Jumla ya Bidhaa" },
   low_stock: { en: "Low Stock", sw: "Hifadhi Chini" },
+  low_stock_alert: { en: "Low Stock Alert", sw: "Tahadhari ya Hifadhi Chini" },
+  low_stock_alert_desc: { en: "The following products are running low and need restocking:", sw: "Bidhaa zifuatazo zinapungua na zinahitaji kujazwa:" },
+  low_stock_threshold: { en: "Low Stock Threshold", sw: "Kiwango cha Hifadhi Chini" },
+  low_stock_threshold_tip: { en: "Alert when stock falls to this level", sw: "Tahadhari hifadhi ikishuka hadi kiwango hiki" },
 
   // Products
   add_product: { en: "Add Product", sw: "Ongeza Bidhaa" },

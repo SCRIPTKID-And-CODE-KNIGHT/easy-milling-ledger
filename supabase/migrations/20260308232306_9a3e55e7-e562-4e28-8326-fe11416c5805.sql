@@ -1,0 +1,1 @@
+ALTER TABLE public.shop_products ADD COLUMN low_stock_threshold numeric NOT NULL DEFAULT 5;
