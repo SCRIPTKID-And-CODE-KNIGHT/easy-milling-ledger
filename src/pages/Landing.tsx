@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useTheme } from "next-themes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Package, Settings2, ArrowRight, TrendingUp, Shield, Zap } from "lucide-react";
+import { BarChart3, Package, Settings2, ArrowRight, TrendingUp, Shield, Zap, Moon, Sun } from "lucide-react";
 
 export default function Landing() {
   const { t } = useLanguage();
