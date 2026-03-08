@@ -7,6 +7,7 @@ import { BarChart3, Package, Settings2, ArrowRight, TrendingUp, Shield, Zap, Moo
 
 export default function Landing() {
   const { t } = useLanguage();
+  const { theme, setTheme } = useTheme();
 
   const features = [
     {
