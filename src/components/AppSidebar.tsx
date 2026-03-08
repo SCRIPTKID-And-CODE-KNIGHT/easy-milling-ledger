@@ -1,9 +1,10 @@
-import { LayoutDashboard, PlusCircle, BarChart3, LogOut, Languages, Package, ShoppingCart, ArrowLeftRight } from "lucide-react";
+import { LayoutDashboard, PlusCircle, BarChart3, LogOut, Languages, Package, ShoppingCart, ArrowLeftRight, Moon, Sun } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useBusinessType } from "@/hooks/useBusinessType";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "next-themes";
 import {
   Sidebar,
   SidebarContent,
@@ -25,6 +26,7 @@ export function AppSidebar() {
   const { t, language, toggleLanguage } = useLanguage();
   const { businessType, setBusinessType } = useBusinessType();
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
 
   const millingItems = [
     { title: t("dashboard"), url: "/dashboard", icon: LayoutDashboard },
@@ -86,6 +88,10 @@ export function AppSidebar() {
         <Button variant="ghost" size="sm" onClick={toggleLanguage} className="w-full justify-start text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent">
           <Languages className="mr-2 h-4 w-4" />
           {!collapsed && (language === "en" ? "Swahili" : "English")}
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="w-full justify-start text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent">
+          {theme === "dark" ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+          {!collapsed && (theme === "dark" ? t("light_mode") : t("dark_mode"))}
         </Button>
         <Button variant="ghost" size="sm" onClick={signOut} className="w-full justify-start text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent">
           <LogOut className="mr-2 h-4 w-4" />

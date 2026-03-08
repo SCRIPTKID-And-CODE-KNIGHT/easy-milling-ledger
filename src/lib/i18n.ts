@@ -7,6 +7,8 @@ const translations: Record<string, Record<Language, string>> = {
   add_record: { en: "Add Record", sw: "Ongeza Rekodi" },
   reports: { en: "Reports", sw: "Ripoti" },
   sign_out: { en: "Sign Out", sw: "Ondoka" },
+  dark_mode: { en: "Dark Mode", sw: "Hali ya Giza" },
+  light_mode: { en: "Light Mode", sw: "Hali ya Mwanga" },
 
   // Header
   milling_records: { en: "Biashara Bora System", sw: "Mfumo wa Biashara Bora" },
