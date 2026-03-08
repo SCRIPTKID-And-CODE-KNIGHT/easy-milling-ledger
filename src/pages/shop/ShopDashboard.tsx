@@ -23,7 +23,7 @@ const ShopDashboard = () => {
   const sales = todayRecord?.total_sales ?? 0;
   const profit = todayRecord?.profit ?? 0;
   const totalProducts = products.length;
-  const lowStock = products.filter((p) => p.stock_quantity <= 5);
+  const lowStock = products.filter((p) => p.stock_quantity <= (p.low_stock_threshold ?? 5));
 
   return (
     <AppLayout>
