@@ -14,7 +14,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/hooks/useLanguage";
 import { getMonthName } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-import { Trash2 } from "lucide-react";
+import { Trash2, FileDown, FileSpreadsheet } from "lucide-react";
+import { exportToPDF, exportToCSV } from "@/lib/exportUtils";
 
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth() + 1;
